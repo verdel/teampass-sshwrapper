@@ -10,7 +10,7 @@ from tpssh.teampass.exceptions import TeampassApiException
 def set_proc_name(newname):
     from ctypes import cdll, byref, create_string_buffer
     libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(newname)+1)
+    buff = create_string_buffer(len(newname) + 1)
     buff.value = newname
     libc.prctl(15, byref(buff), 0, 0, 0)
 
@@ -86,5 +86,5 @@ def run():
     else:
         print("Invalid destination host option format")
         sys.exit(1)
-    set_proc_name("{}".format(host))
+    set_proc_name(host.encode())
     spw(args.server, args.token, host, username, args.params)
